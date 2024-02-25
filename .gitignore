@@ -1,0 +1,4 @@
+*.o
+*.code-workspace
+
+00_simple/00_simple
