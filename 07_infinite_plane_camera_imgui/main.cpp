@@ -21,6 +21,8 @@
 
 #include "ImguiCamera.h"
 
+#include "path.h"
+
 const unsigned int windowWidth = 1000;
 const unsigned int windowHeight = 1000;
 
@@ -122,19 +124,19 @@ int main(int argc, char **argv)
 
     // ==================================================================================================================
     // plane shader -----------------------------------------------------------------------------------------------------
-    gloo::Program planeShaderProgram(gloo::Shader(gloo::getFileContents("./plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./plane.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program planeShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/07_infinite_plane_camera_imgui/plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/07_infinite_plane_camera_imgui/plane.frag"), gloo::Shader::Type::Fragment));
     // plane mesh -------------------------------------------------------------------------------------------------------
     gloo::Mesh planeMesh(std::vector<gloo::Vertex>(PLANE_VERTICES), std::vector<GLuint>(PLANE_INDICES));
     planeMesh.LinkPositionToLocation(0);
     // pyramid shader ---------------------------------------------------------------------------------------------------
-    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents("./pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./pyramid.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/07_infinite_plane_camera_imgui/pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/07_infinite_plane_camera_imgui/pyramid.frag"), gloo::Shader::Type::Fragment));
     // pyramid mesh -----------------------------------------------------------------------------------------------------
     gloo::Mesh pyramidMesh(std::vector<gloo::Vertex>(PYRAMID_VERTICES), std::vector<GLuint>(PYRAMID_INDICES));
     pyramidMesh.LinkPositionToLocation(0);
     pyramidMesh.LinkTextureUVToLocation(1);
     // brick texture ----------------------------------------------------------------------------------------------------
     int brickTexWidth, brickTexHeight, _brickTexNCh;
-    unsigned char *brickTexBytes = stbi_load("./brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
+    unsigned char *brickTexBytes = stbi_load(SRC_ROOT "/07_infinite_plane_camera_imgui/brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
     gloo::Texture brickTex(brickTexBytes, brickTexWidth, brickTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     pyramidShaderProgram.Uniform("in_texture", brickTex);
     brickTex.Bind();

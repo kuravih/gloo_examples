@@ -13,6 +13,8 @@
 #include "backend/imgui_impl_opengl3.h"
 
 #include "gloo/Texture.h"
+#include "path.h"
+
 // ====================================================================================================================
 
 // ====================================================================================================================
@@ -62,7 +64,7 @@ int main(int argc, char **argv)
 
     // Stores the width, height, and the number of color channels of the image
     int gridTexWidth, gridTexHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/04_simple_texture_imgui/grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
     gloo::Texture gridTex(gridTexBytes, gridTexWidth, gridTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     // ==================================================================================================================
 

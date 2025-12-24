@@ -24,6 +24,8 @@
 #include "kato/function.hpp"
 
 #include "ImguiWindow.h"
+
+#include "path.h"
 // ====================================================================================================================
 
 // ====================================================================================================================
@@ -84,13 +86,13 @@ int main(int argc, char **argv)
     ImGui::CircleWindow circleWindow(appData.ui.showCircleWindow);
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     glfwMakeContextCurrent(subWindow);
-    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents("./shaders/direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./shaders/direct.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/direct.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES));
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);
     // ----------------------------------------------------------------------------------------------------------------
     int gridTexWidth, gridTexHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/13_multiple_windows/grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
     gloo::Texture gridTex(gridTexBytes, gridTexWidth, gridTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     screenShaderProgram.Uniform("in_texture", gridTex);
     gridTex.Bind();

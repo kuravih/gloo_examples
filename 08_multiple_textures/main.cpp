@@ -12,6 +12,8 @@
 #include "glfw-cxx/Error.hpp"
 #include "glfw-cxx/Context.hpp"
 
+#include "path.h"
+
 const unsigned int windowWidth = 1000;
 const unsigned int windowHeight = 1000;
 
@@ -62,14 +64,14 @@ int main()
 
     // ------------------------------------------------------------------------------------------------------------------
     // Generates Shader object using shaders shape.vert and shape.frag
-    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents("./direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./direct.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/08_multiple_textures/direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/08_multiple_textures/direct.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES));
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);
     // ------------------------------------------------------------------------------------------------------------------
     // Stores the width, height, and the number of color channels of the image
     int texWidth, texHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/08_multiple_textures/grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
     gloo::Texture gridTex(gridTexBytes, texWidth, texHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     // ------------------------------------------------------------------------------------------------------------------
     uint8_t *overlayTexBytes = new uint8_t[texWidth * texHeight]();

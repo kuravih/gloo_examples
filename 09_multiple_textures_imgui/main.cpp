@@ -18,6 +18,8 @@
 #include "gloo/Framebuffer.h"
 #include "gloo/Renderbuffer.h"
 #include "gloo/Mesh.h"
+
+#include "path.h"
 // ====================================================================================================================
 
 // ====================================================================================================================
@@ -81,7 +83,7 @@ int main(int argc, char **argv)
 
     // ==================================================================================================================
     int texWidth, texHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/09_multiple_textures_imgui/grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
     gloo::Texture gridTex(gridTexBytes, texWidth, texHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     // ------------------------------------------------------------------------------------------------------------------
     uint8_t *overlayTexBytes = new uint8_t[texWidth * texHeight]();
@@ -105,7 +107,7 @@ int main(int argc, char **argv)
     }
     gloo::Texture maskTex(maskTexBytes, texWidth, texHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::Red, gloo::Texture::Format::Red, gloo::Texture::Slot::slot02, gloo::Texture::Target::Texture2D);
     // ==================================================================================================================
-    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents("./direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./direct.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/09_multiple_textures_imgui/direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/09_multiple_textures_imgui/direct.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES));
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);

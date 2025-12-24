@@ -1,0 +1,8 @@
+#ifndef __PATH_DEF_H__
+#define __PATH_DEF_H__
+
+#pragma once
+
+#define SRC_ROOT "@SRC_ROOT@"
+
+#endif // __PATH_DEF_H__

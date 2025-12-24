@@ -14,6 +14,8 @@
 #include "gloo/Program.h"
 #include "gloo/Mesh.h"
 
+#include "path.h"
+
 const unsigned int windowWidth = 800;
 const unsigned int windowHeight = 800;
 
@@ -76,14 +78,14 @@ int main()
 
     // ------------------------------------------------------------------------------------------------------------------
     // Generates Shader object using shaders shape.vert and shape.frag
-    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents("./direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./direct.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/11_gpu_cpu_compare/gpu_test/direct.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/11_gpu_cpu_compare/gpu_test/direct.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES));
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);
     // ------------------------------------------------------------------------------------------------------------------
     // Stores the width, height, and the number of color channels of the image
     int texWidth, texHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/11_gpu_cpu_compare/gpu_test/grid.png", &texWidth, &texHeight, &_gridTexNCh, 0);
     gloo::Texture in_gridTex(gridTexBytes, texWidth, texHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     static glm::vec2 in_circle_center(0.5, 0.5);
     static float in_circle_radius = 0.25;

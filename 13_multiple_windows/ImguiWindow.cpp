@@ -1,5 +1,7 @@
 #include "ImguiWindow.h"
 #include "kato/function.hpp"
+
+#include "path.h"
 // ====================================================================================================================
 
 
@@ -42,7 +44,7 @@ void ImGui::BaseWindow::Show(AppData& _appData) {
 
 
 // ==== BoxWindow =====================================================================================================
-ImGui::BoxWindow::BoxWindow(bool& _show) : BaseWindow(_show), boxShaderProgram(gloo::Shader(gloo::getFileContents("./shaders/plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./shaders/box.frag"), gloo::Shader::Type::Fragment)), screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES)), viewSize(640,480), viewWindowSize(viewSize.x+14,viewSize.y+14), in_color1(0.90,0.60,0.30), in_color2(0.65,0.85,1.00), in_box_center(0.5,0.5), in_box_sides(0.25,0.25), renderTex(viewSize.x, viewSize.y, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D) {
+ImGui::BoxWindow::BoxWindow(bool& _show) : BaseWindow(_show), boxShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/box.frag"), gloo::Shader::Type::Fragment)), screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES)), viewSize(640,480), viewWindowSize(viewSize.x+14,viewSize.y+14), in_color1(0.90,0.60,0.30), in_color2(0.65,0.85,1.00), in_box_center(0.5,0.5), in_box_sides(0.25,0.25), renderTex(viewSize.x, viewSize.y, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D) {
   screenMesh.LinkPositionToLocation(0);
   screenMesh.LinkTextureUVToLocation(1);
   gloo::Framebuffer::UNBIND();
@@ -161,7 +163,7 @@ ImGui::BoxWindow::~BoxWindow() {
 
 
 // ==== CircleWindow ==================================================================================================
-ImGui::CircleWindow::CircleWindow(bool& _show) : BaseWindow(_show), circleShaderProgram(gloo::Shader(gloo::getFileContents("./shaders/plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./shaders/circle.frag"), gloo::Shader::Type::Fragment)), screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES)), viewSize(480,480), viewWindowSize(viewSize.x+14,viewSize.y+14), in_color1(0.90,0.60,0.30), in_color2(0.65,0.85,1.00), in_circle_center(0.5,0.5), in_circle_radius(0.25), renderTex(viewSize.x, viewSize.y, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot01, gloo::Texture::Target::Texture2D) {
+ImGui::CircleWindow::CircleWindow(bool& _show) : BaseWindow(_show), circleShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/plane.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/13_multiple_windows/shaders/circle.frag"), gloo::Shader::Type::Fragment)), screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES)), viewSize(480,480), viewWindowSize(viewSize.x+14,viewSize.y+14), in_color1(0.90,0.60,0.30), in_color2(0.65,0.85,1.00), in_circle_center(0.5,0.5), in_circle_radius(0.25), renderTex(viewSize.x, viewSize.y, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot01, gloo::Texture::Target::Texture2D) {
   screenMesh.LinkPositionToLocation(0);
   screenMesh.LinkTextureUVToLocation(1);
   gloo::Framebuffer::UNBIND();

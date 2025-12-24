@@ -14,6 +14,8 @@
 #include "gloo/Renderbuffer.h"
 #include "gloo/Camera.h"
 
+#include "path.h"
+
 const unsigned int windowWidth = 800;
 const unsigned int windowHeight = 800;
 
@@ -100,14 +102,14 @@ int main()
 
     // ------------------------------------------------------------------------------------------------------------------
     // Generates Shader object using shaders shape.vert and shape.frag
-    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents("./pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./pyramid.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/03_render_texture/pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/03_render_texture/pyramid.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh pyramidMesh(std::vector<gloo::Vertex>(PYRAMID_VERTICES), std::vector<GLuint>(PYRAMID_INDICES));
     pyramidMesh.LinkPositionToLocation(0);
     pyramidMesh.LinkTextureUVToLocation(1);
     // ------------------------------------------------------------------------------------------------------------------
     // Stores the width, height, and the number of color channels of the image
     int brickTexWidth, brickTexHeight, _brickTexNCh;
-    unsigned char *brickTexBytes = stbi_load("./brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
+    unsigned char *brickTexBytes = stbi_load(SRC_ROOT "/03_render_texture/brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
     gloo::Texture brickTex(brickTexBytes, brickTexWidth, brickTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot01, gloo::Texture::Target::Texture2D);
     pyramidShaderProgram.Uniform("in_texture", brickTex);
     brickTex.Bind();
@@ -115,14 +117,14 @@ int main()
 
     // ------------------------------------------------------------------------------------------------------------------
     // Generates Shader object using shaders shape.vert and shape.frag
-    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents("./screen.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./screen.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program screenShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/03_render_texture/screen.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/03_render_texture/screen.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh screenMesh(std::vector<gloo::Vertex>(SCREEN_VERTICES), std::vector<GLuint>(SCREEN_INDICES));
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);
     // ------------------------------------------------------------------------------------------------------------------
     // Stores the width, height, and the number of color channels of the image
     int gridTexWidth, gridTexHeight, _gridTexNCh;
-    unsigned char *gridTexBytes = stbi_load("./grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
+    unsigned char *gridTexBytes = stbi_load(SRC_ROOT "/03_render_texture/grid.png", &gridTexWidth, &gridTexHeight, &_gridTexNCh, 0);
     gloo::Texture gridTex(gridTexBytes, gridTexWidth, gridTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     screenShaderProgram.Uniform("in_texture", gridTex);
     gridTex.Bind();

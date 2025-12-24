@@ -22,6 +22,8 @@
 #include "gloo/Mesh.h"
 
 #include "ImguiMouse.h"
+
+#include "path.h"
 // ====================================================================================================================
 
 // ====================================================================================================================
@@ -103,8 +105,8 @@ int main(int argc, char **argv)
     screenMesh.LinkPositionToLocation(0);
     screenMesh.LinkTextureUVToLocation(1);
     // ==================================================================================================================
-    gloo::Shader *p_vertShader = new gloo::Shader(gloo::getFileContents("./shaders/plane.vert"), gloo::Shader::Type::Vertex);
-    gloo::Shader *p_fragShader = new gloo::Shader(gloo::getFileContents(("./shaders/" + shaderNameArray[shaderIndex] + ".frag").c_str()), gloo::Shader::Type::Fragment);
+    gloo::Shader *p_vertShader = new gloo::Shader(gloo::getFileContents(SRC_ROOT "/10_2dsdf_testing_imgui/shaders/plane.vert"), gloo::Shader::Type::Vertex);
+    gloo::Shader *p_fragShader = new gloo::Shader(gloo::getFileContents((SRC_ROOT "/10_2dsdf_testing_imgui/shaders/" + shaderNameArray[shaderIndex] + ".frag").c_str()), gloo::Shader::Type::Fragment);
     gloo::Program *p_shaderProgram = new gloo::Program(*p_vertShader, *p_fragShader);
     // ==================================================================================================================
     glm::vec2 screenSize(1000, 1000);
@@ -482,7 +484,7 @@ int main(int argc, char **argv)
                         shaderIndex = index;
                         delete p_shaderProgram;
                         delete p_fragShader;
-                        p_fragShader = new gloo::Shader(gloo::getFileContents(("./shaders/" + shaderNameArray[shaderIndex] + ".frag").c_str()), gloo::Shader::Type::Fragment);
+                        p_fragShader = new gloo::Shader(gloo::getFileContents((SRC_ROOT "/10_2dsdf_testing_imgui/shaders/" + shaderNameArray[shaderIndex] + ".frag").c_str()), gloo::Shader::Type::Fragment);
                         p_shaderProgram = new gloo::Program(*p_vertShader, *p_fragShader);
                     }
 

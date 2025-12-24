@@ -13,6 +13,7 @@
 #include "gloo/Shader.h"
 #include "gloo/Program.h"
 #include "gloo/Mesh.h"
+#include "path.h"
 
 const unsigned int width = 800;
 const unsigned int height = 800;
@@ -80,14 +81,14 @@ int main()
 
     // ------------------------------------------------------------------------------------------------------------------
     // Generates Shader object using shaders shape.vert and shape.frag
-    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents("./pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents("./pyramid.frag"), gloo::Shader::Type::Fragment));
+    gloo::Program pyramidShaderProgram(gloo::Shader(gloo::getFileContents(SRC_ROOT "/02_simple_mesh/pyramid.vert"), gloo::Shader::Type::Vertex), gloo::Shader(gloo::getFileContents(SRC_ROOT "/02_simple_mesh/pyramid.frag"), gloo::Shader::Type::Fragment));
     gloo::Mesh pyramidMesh(std::vector<gloo::Vertex>(PYRAMID_VERTICES), std::vector<GLuint>(PYRAMID_INDICES));
     pyramidMesh.LinkPositionToLocation(0);
     pyramidMesh.LinkTextureUVToLocation(1);
     // ------------------------------------------------------------------------------------------------------------------
     // Stores the width, height, and the number of color channels of the image
     int brickTexWidth, brickTexHeight, _brickTexNCh;
-    unsigned char *brickTexBytes = stbi_load("./brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
+    unsigned char *brickTexBytes = stbi_load(SRC_ROOT "/02_simple_mesh/brick.png", &brickTexWidth, &brickTexHeight, &_brickTexNCh, 0);
     gloo::Texture brickTex(brickTexBytes, brickTexWidth, brickTexHeight, gloo::Texture::Type::UnsignedByte, gloo::Texture::InternalFormat::RGBA, gloo::Texture::Format::RGBA, gloo::Texture::Slot::slot00, gloo::Texture::Target::Texture2D);
     pyramidShaderProgram.Uniform("in_tex0", brickTex);
     brickTex.Bind();
